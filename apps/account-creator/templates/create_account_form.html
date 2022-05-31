@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+  <title>MediaWiki Create Account</title>
+
+  <!-- Download the file locally in the static folder for deployment in Toolforge -->
+  <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <link href="{{ url_for('static', filename='account_form.css') }}" rel="stylesheet">
+
+<div class="container form-container">
+  <h2>Create MediaWiki Account</h2>
+  <form method="POST">
+    <div class="form-group">
+      {% for field in fields %}
+      <div class="form-field">
+        <div class="label-field">{{ field['label'] }}</div>
+        <input type="{{ field['type'] }}" name="{{ field['name'] }}" value="{{ field['value'] }}">
+      </div>
+      {% endfor %}
+      <img src="{{ captcha }}">
+    </div>
+    <button type="submit" class="btn btn-success">Create your account</button>
+  </form>
+
+  <br>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-info">
+    {{ message[1] }}
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  <br>
+  <a href="https://github.com/wikimedia/mediawiki-api-demos/tree/master/apps/account-creator">
+  <p>View source on GitHub</p>
+  </a>
+</div>

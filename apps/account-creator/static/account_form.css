@@ -1,0 +1,18 @@
+.form-container {
+	margin-top: 20px;
+}
+
+.form-field
+{
+    margin-top: 5px;
+}
+
+label
+{
+    font-weight: 400;
+}
+
+input
+{
+    width: 30%;
+}
