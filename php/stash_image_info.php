@@ -9,14 +9,15 @@
     MIT license
 */
 
-$endPoint = "https://test.wikipedia.org/w/api.php";
+$endPoint = "https://ds1.cp4.vps1.seadan.com.au/wiki/api.php";
 
 $login_Token = getLoginToken(); // Step 1
-loginRequest( $login_Token ); // Step 2
+loginRequest($login_Token); // Step 2
 stashimageinfo(); // Step 4
 
 // Step 1: GET Request to fetch login token
-function getLoginToken() {
+function getLoginToken()
+{
 	global $endPoint;
 
 	$params1 = [
@@ -26,23 +27,24 @@ function getLoginToken() {
 		"format" => "json"
 	];
 
-	$url = $endPoint . "?" . http_build_query( $params1 );
+	$url = $endPoint . "?" . http_build_query($params1);
 
-	$ch = curl_init( $url );
-	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt( $ch, CURLOPT_COOKIEJAR, "cookie.txt" );
-	curl_setopt( $ch, CURLOPT_COOKIEFILE, "cookie.txt" );
+	$ch = curl_init($url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
+	curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
 
-	$output = curl_exec( $ch );
-	curl_close( $ch );
+	$output = curl_exec($ch);
+	curl_close($ch);
 
-	$result = json_decode( $output, true );
+	$result = json_decode($output, true);
 	return $result["query"]["tokens"]["logintoken"];
 }
 
 // Step 2: POST Request to log in. Obtain credentials via Special:BotPasswords
 // (https://www.mediawiki.org/wiki/Special:BotPasswords) for lgname & lgpassword
-function loginRequest( $logintoken ) {
+function loginRequest($logintoken)
+{
 	global $endPoint;
 
 	$params2 = [
@@ -55,20 +57,20 @@ function loginRequest( $logintoken ) {
 
 	$ch = curl_init();
 
-	curl_setopt( $ch, CURLOPT_URL, $endPoint );
-	curl_setopt( $ch, CURLOPT_POST, true );
-	curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $params2 ) );
-	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt( $ch, CURLOPT_COOKIEJAR, "cookie.txt" );
-	curl_setopt( $ch, CURLOPT_COOKIEFILE, "cookie.txt" );
+	curl_setopt($ch, CURLOPT_URL, $endPoint);
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params2));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
+	curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
 
-	$output = curl_exec( $ch );
-	curl_close( $ch );
-
+	$output = curl_exec($ch);
+	curl_close($ch);
 }
 
 // Step 3: Send a request to return information for a stashed file
-function stashimageinfo() {
+function stashimageinfo()
+{
 	global $endPoint;
 
 	$params4 = [
@@ -80,15 +82,18 @@ function stashimageinfo() {
 
 	$ch = curl_init();
 
-	curl_setopt( $ch, CURLOPT_URL, $endPoint );
-	curl_setopt( $ch, CURLOPT_POST, true );
-	curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $params4 ) );
-	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt( $ch, CURLOPT_COOKIEJAR, "cookie.txt" );
-	curl_setopt( $ch, CURLOPT_COOKIEFILE, "cookie.txt" );
+	curl_setopt($ch, CURLOPT_URL, $endPoint);
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params4));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
+	curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
 
-	$output = curl_exec( $ch );
-	curl_close( $ch );
+	$output = curl_exec($ch);
+	curl_close($ch);
 
-	echo ( $output );
+	echo '<pre>';
+	print_r($output);
+	echo '</pre>';
+	die;
 }
